@@ -16,7 +16,7 @@ router.post("/",loggedIn, createBlogs);
 router.get("/", retrieveblogs);
 router.delete("/:id", loggedIn, authorization, deleteById);
 router.patch("/:id", loggedIn, authorization, updateById);
-router.patch("/comments/:id", loggedIn, authorization, updateBlogComments);
+router.patch("/comments/:id", loggedIn, updateBlogComments);
 router.patch("/vote/:id", loggedIn, votingAuthorization, updateBlogsByVotes);
 
 module.exports = router;

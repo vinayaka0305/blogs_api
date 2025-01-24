@@ -5,7 +5,7 @@ const createBlogs = async (req, res) => {
     const data = await new blogsSchema({
       title: req.body.title,
       description: req.body.description,
-      user: req._id,
+      user: req.id,
       created: req.created,
       comments: req.body.comments ? req.body.comments : [],
     });
@@ -96,7 +96,7 @@ const updateBlogsByVotes = async (req, res) => {
       result.downvote++;
     }
     // console.log(result,"result")
-    console.log(req.id,"id");
+    console.log(req.id, "id");
     result.votes.push(req.id);
     const updateByVote = await blogsSchema.findByIdAndUpdate(
       req.params.id,
@@ -118,29 +118,32 @@ const updateBlogsByVotes = async (req, res) => {
   }
 };
 
-const updateBlogComments = async(req,res)=>{
+const updateBlogComments = async (req, res) => {
   try {
     const data = await blogsSchema.findById(req.params.id);
     data.comments.push(req.body.comments);
-    const updateComments = await blogsSchema.findByIdAndUpdate(req.params.id,data,{new:true});
+    const updateComments = await blogsSchema.findByIdAndUpdate(
+      req.params.id,
+      data,
+      { new: true }
+    );
     res.status(200).json({
       status: "success",
       messgage: "comments updated successfully",
       updateComments,
     });
-
   } catch (error) {
     res.status(500).json({
       status: "failed",
       messgage: error.message,
     });
   }
-}
+};
 module.exports = {
   createBlogs,
   updateBlogsByVotes,
   retrieveblogs,
   deleteById,
   updateById,
-  updateBlogComments
+  updateBlogComments,
 };

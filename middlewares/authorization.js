@@ -3,8 +3,9 @@ const blogsSchema = require("../models/blogsSchema");
 const authorization = async (req, res, next) => {
   try {
     const data = await blogsSchema.findById(req.params.id);
+    // console.log(data);
     console.log(data);
-    if (data.user === req.id) {
+    if (data.user == req.id) {
       next();
     } else {
       res.status(401).json({
